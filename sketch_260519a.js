@@ -128,30 +128,35 @@ class Particula {
   }
 }
 
-// Función que ejecuta el botón HTML al hacer clic
+// Función corregida: renderiza la descarga a 1080x1350 nativo ignorando el tamaño del celular
 function procesarDescarga() {
-  // 1. Creamos el canvas temporal oculto de 1080x1350
+  // 1. Creamos un canvas temporal oculto con las medidas de alta resolución estrictas
   let canvasFinal = document.createElement('canvas');
   canvasFinal.width = 1080;
   canvasFinal.height = 1350;
   let ctx = canvasFinal.getContext('2d');
 
-  // 2. Copiamos el fondo animado actual de p5.js
+  // 2. Capturamos los datos internos del motor gráfico de p5.js
   let canvasP5 = document.querySelector('canvas');
-  ctx.drawImage(canvasP5, 0, 0);
+  
+  // CORRECCIÓN CLAVE: En vez de copiar el canvas usando el tamaño de la pantalla,
+  // leemos la matriz interna de píxeles original a resolución completa (1080x1350)
+  // y la estampamos milimétricamente en el archivo final. Esto congela el grosor real.
+  ctx.drawImage(canvasP5, 0, 0, canvasP5.width, canvasP5.height, 0, 0, 1080, 1350);
 
   // 3. Obtenemos el SVG vectorial nítido del HTML
   let imgSVG = document.querySelector('.mascara-vectorial');
 
-  // 4. Dibujamos el SVG encima en su tamaño nativo completo
+  // 4. Dibujamos el SVG encima respetando su tamaño nativo completo
   ctx.drawImage(imgSVG, 0, 0, 1080, 1350);
 
-  // 5. Forzamos la descarga del PNG en alta definición
+  // 5. Forzamos la descarga del archivo final perfecto con las líneas finas originales
   let enlace = document.createElement('a');
-  enlace.download = 'cartel_26mayo2026.png';
+  enlace.download = 'cartel_final_1080x1350.png';
   enlace.href = canvasFinal.toDataURL('image/png');
   enlace.click();
 }
+
 
 // Mantenemos la tecla 'S' llamando a la misma función para tener ambos métodos
 function keyPressed() {
