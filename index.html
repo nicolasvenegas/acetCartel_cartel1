@@ -1,0 +1,113 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartel Interactivo - Nature of Code</title>
+    <!-- PLEASE NO CHANGES BELOW THIS LINE (UNTIL I SAY SO) -->
+  <script language="javascript" type="text/javascript" src="libraries/p5.min.js"></script>
+  <script language="javascript" type="text/javascript" src="sketch_260519a.js"></script>
+  <!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
+    <style>
+     body {
+    margin: 0;
+    padding: 0;
+    background-color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Contenedor optimizado para centrado absoluto */
+.contenedor-cartel {
+    position: relative;
+    width: 1080px;
+    height: 1350px;
+    
+    /* El origen en CENTER asegura que al achicarse se mueva hacia el centro del body */
+    transform-origin: center center; 
+    
+    /* Mantenemos el escalado visual para laptops */
+    transform: scale(0.45); 
+    
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+    
+    /* Forzamos que no se mueva de su eje flex */
+    flex-shrink: 0; 
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.mascara-vectorial {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1080px;
+    height: 1350px;
+    z-index: 2;
+    pointer-events: none;
+     mix-blend-mode: multiply; 
+}
+
+    </style>
+</head>
+<body>
+    <div class="contenedor-cartel">
+        <!-- El canvas de p5.js se inyectará automáticamente aquí abajo -->
+        <img src="data/mask.svg" class="mascara-vectorial" alt="Máscara de texto">
+    </div>
+
+    <!-- Botón flotante para descargar el PNG -->
+    <button id="btn-descargar" onclick="procesarDescarga()">descargar cartel</button>
+
+    <style>
+        /* Estilos elegantes para el botón flotante */
+        #btn-descargar {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10;
+            background-color: blue; /* Azul oscuro estilo ACETchile */
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            font-family: sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        #btn-descargar:hover {
+            background-color: white; /* Rojo vivo al pasar el cursor */
+            border-color: none;
+            color: blue;
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 20px rgba(255,255,255,.1);
+        }
+
+        #btn-descargar:active {
+            transform: translateY(0);
+        }
+    </style>
+
+    <!-- Vinculamos tu script de Processing/p5.js al final -->
+    <script src="sketch.js"></script>
+</body>
+
+</html>
